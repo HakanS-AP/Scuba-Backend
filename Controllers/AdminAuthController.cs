@@ -5,7 +5,7 @@ namespace ScubaHub.Api.Controllers
 {
     [ApiController]
     [Route("api/admin/auth")]
-    [EnableCors("AdminFrontend")] // Only the admin frontend origin may call these routes.
+    //[EnableCors("AdminFrontend")] // Only the admin frontend origin may call these routes.
     public class AdminAuthController : ControllerBase
     {
         // POST /api/admin/auth/verify

@@ -29,31 +29,31 @@ namespace ScubaHub.Api
             // Note: CORS does not protect against direct HTTP calls (e.g. curl).
             // The AdminAuthFilter (X-Admin-Key header) is the server-side guard.
             // Your Azure VNet + ZTNA policy is the network-layer guard.
-            builder.Services.AddCors(options =>
-            {
-                // Applied to public endpoints — never includes the admin origin.
-                options.AddPolicy("PublicFrontend", policy =>
-                {
-                    policy.WithOrigins(
-                            "http://localhost:5173",  // dev
-                            "https://scubahub.com"    // prod
-                          )
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
-                });
+            // builder.Services.AddCors(options =>
+            // {
+            //     // Applied to public endpoints — never includes the admin origin.
+            //     options.AddPolicy("PublicFrontend", policy =>
+            //     {
+            //         policy.WithOrigins(
+            //                 "http://localhost:5173",  // dev
+            //                 "https://scubahub.com"    // prod
+            //               )
+            //               .AllowAnyHeader()
+            //               .AllowAnyMethod();
+            //     });
 
-                // Applied to admin endpoints — never includes the public origin.
-                options.AddPolicy("AdminFrontend", policy =>
-                {
-                    policy.WithOrigins(
-                            "http://localhost:5174",       // dev
-                            "https://admin.scubahub.com"  // prod
-                          )
-                          .AllowAnyHeader()
-                          .AllowAnyMethod()
-                          .AllowCredentials(); // Required for HttpOnly cookie auth
-                });
-            });
+            //     // Applied to admin endpoints — never includes the public origin.
+            //     options.AddPolicy("AdminFrontend", policy =>
+            //     {
+            //         policy.WithOrigins(
+            //                 "http://localhost:5174",       // dev
+            //                 "https://admin.scubahub.com"  // prod
+            //               )
+            //               .AllowAnyHeader()
+            //               .AllowAnyMethod()
+            //               .AllowCredentials(); // Required for HttpOnly cookie auth
+            //     });
+            // });
 
             var app = builder.Build();
 
@@ -63,7 +63,7 @@ namespace ScubaHub.Api
             }
 
             // UseCors() with no policy name enables per-controller policy selection.
-            app.UseCors();
+            //app.UseCors();
             app.MapControllers();
 
             app.Run();
