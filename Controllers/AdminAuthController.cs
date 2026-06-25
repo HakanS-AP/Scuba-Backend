@@ -24,10 +24,12 @@ namespace ScubaHub.Api.Controllers
             Response.Cookies.Append("admin_session", expectedKey, new CookieOptions
             {
                 HttpOnly = true,
-                // IsHttps is reliable here because UseForwardedHeaders in Program.cs
-                // reads the X-Forwarded-Proto header set by Azure's load balancer.
-                Secure   = HttpContext.Request.IsHttps,
-                SameSite = SameSiteMode.Strict,
+                // The admin SPA (scuba-admin.azurewebsites.net) and this API are on
+                // different sites — *.azurewebsites.net is on the Public Suffix List,
+                // so each app is its own registrable domain. A cross-site cookie is
+                // only stored and sent when it is SameSite=None AND Secure.
+                Secure   = true,
+                SameSite = SameSiteMode.None,
                 Path     = "/api/admin",
                 MaxAge   = TimeSpan.FromHours(8)
             });
@@ -39,7 +41,12 @@ namespace ScubaHub.Api.Controllers
         [HttpPost("logout")]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("admin_session", new CookieOptions { Path = "/api/admin" });
+            Response.Cookies.Delete("admin_session", new CookieOptions
+            {
+                Path     = "/api/admin",
+                Secure   = true,
+                SameSite = SameSiteMode.None
+            });
             return Ok(new { message = "Logged out." });
         }
     }

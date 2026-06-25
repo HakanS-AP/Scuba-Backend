@@ -54,10 +54,16 @@ namespace ScubaHub.Api
             // requests to the app over plain HTTP internally.
             // Without this middleware HttpContext.Request.IsHttps is always false,
             // which breaks the Secure cookie flag on the admin session cookie.
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            var forwardedHeadersOptions = new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedProto
-            });
+            };
+            // Azure's load balancer is not a loopback proxy, so the default
+            // KnownNetworks/KnownProxies allowlist (loopback only) would cause the
+            // X-Forwarded-Proto header to be ignored — leaving Request.IsHttps false.
+            forwardedHeadersOptions.KnownIPNetworks.Clear();
+            forwardedHeadersOptions.KnownProxies.Clear();
+            app.UseForwardedHeaders(forwardedHeadersOptions);
 
             if (app.Environment.IsDevelopment())
             {
