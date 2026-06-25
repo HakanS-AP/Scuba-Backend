@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScubaHub.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe8fd03769dc5cb1ce340b626ac6cf85eefb091a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+688aae5a673c552b8f93d0709f02313ef7ab6265")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScubaHub.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScubaHub.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
